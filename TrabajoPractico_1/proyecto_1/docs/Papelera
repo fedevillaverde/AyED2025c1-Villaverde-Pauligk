@@ -1,0 +1,9 @@
+    #    contador=0
+    #     if self.esta_vacia == True:
+    #         return contador
+    #     else:
+    #         contador = 1
+    #         aux =self.__cabeza.siguiente
+    #         while (aux != None):
+    #             contador += 1
+    #             aux=aux.siguiente
