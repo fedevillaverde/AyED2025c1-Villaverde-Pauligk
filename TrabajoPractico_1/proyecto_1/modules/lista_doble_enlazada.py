@@ -89,8 +89,8 @@ class ListaDobleEnlazada:
             self.__tamano -=1
             return temp.dato
         if self.esta_vacia():
-            return None
-        if posicion == None or posicion==-1:
+            raise ValueError("La lista está vacía")
+        if posicion == None or posicion==-1 or posicion == self.__tamano -1:
             nodo = self.__cola
             if self.__cabeza == self.__cola:  # solo un nodo
                 self.__cabeza = self.__cola = None
