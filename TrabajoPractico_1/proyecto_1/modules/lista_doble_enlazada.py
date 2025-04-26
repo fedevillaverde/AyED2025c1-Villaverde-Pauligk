@@ -131,33 +131,60 @@ class ListaDobleEnlazada:
         return copia
     
     def invertir (self):
-        cola = self.__cola
-        contador = 1
-        while contador <= self.tamano:
-            self.agregar_al_inicio(cola.dato)
-            cola = cola.anterior
-            self.extraer()
-            contador += 1
+        datos = []
+        actual = self.__cola
+        while actual is not None:
+            datos.append(actual.dato)
+            actual = actual.anterior
+
+        while self.__cabeza is not None:
+            self.extraer()  # suponiendo que esto elimina de la cabeza o cola
+
+        for dato in datos:
+            self.agregar_al_final(dato)  # o al inicio, según el orden que querés
+        
             
 
         
     
+    # def concatenar(self, lista):
+    #     if self.esta_vacia() and lista.esta_vacia():
+    #         return None
+        
+    #     elif self.esta_vacia() and not lista.esta_vacia():
+    #         self.__cabeza = lista.__cabeza
+    #         self.__cola = lista.__cola
+    #         self.__tamano = lista.tamano
+    #         self.__cabeza.anterior = None
+
+    #         return self
+    #     elif not self.esta_vacia() and lista.esta_vacia():
+    #         return self
+    #     else:
+    #         self.__cola.siguiente = lista.__cabeza
+    #         lista.__cabeza.anterior = self.__cola
+    #         self.__cola = lista.__cola
+    #         self.__tamano += lista.tamano
+    #         return self
+
     def concatenar(self, lista):
         if self.esta_vacia() and lista.esta_vacia():
             return None
-        elif self.esta_vacia() and not lista.esta_vacia():
-            self.__cabeza = lista.__cabeza
-            self.__cola = lista.__cola
-            self.__tamano = lista.tamano
+        lista_copia = lista.copiar()  # Asumimos que tenés un método copiar()
+        if self.esta_vacia():
+            self.__cabeza = lista_copia.__cabeza
+            self.__cola = lista_copia.__cola
+            self.__tamano = lista_copia.__tamano
             return self
-        elif not self.esta_vacia() and lista.esta_vacia():
+        elif lista.esta_vacia():
             return self
         else:
-            self.__cola.siguiente = lista.__cabeza
-            lista.__cabeza.anterior = self.__cola
-            self.__cola = lista.__cola
-            self.__tamano += lista.tamano
+            self.__cola.siguiente = lista_copia.__cabeza
+            lista_copia.__cabeza.anterior = self.__cola
+            self.__cola = lista_copia.__cola
+            self.__tamano += lista_copia.__tamano
             return self
+    
     def __add__(self, lista):
         if type(lista)==ListaDobleEnlazada:
             nueva_lista=ListaDobleEnlazada()
@@ -191,10 +218,13 @@ if __name__=='__main__':
     for l in l1:
         print(l)
     len(l1)
-    print("valor insertado",l1.insertar(-13,9)) 
+    
     for l in l1:
         print(l)
-    len(l1)
+    l1.invertir()
+    print("invertida?") 
+    for l in l1:
+        print(l)
     print('-----------------------------')
     
     
