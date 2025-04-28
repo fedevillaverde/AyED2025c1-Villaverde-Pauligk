@@ -82,11 +82,14 @@ class ListaDobleEnlazada:
             self.__tamano+=1
 
     def extraer(self, posicion = None):
-        if posicion ==0:
-            temp=self.__cabeza
-            self.__cabeza=self.__cabeza.siguiente
-            self.__cabeza.anterior=None
-            self.__tamano -=1
+        if posicion == 0:
+            temp = self.__cabeza
+            if self.__cabeza == self.__cola:  # solo un nodo
+                self.__cabeza = self.__cola = None
+            else:
+                self.__cabeza = self.__cabeza.siguiente
+                self.__cabeza.anterior = None
+            self.__tamano -= 1
             return temp.dato
         if self.esta_vacia():
             raise ValueError("La lista está vacía")
@@ -170,7 +173,7 @@ class ListaDobleEnlazada:
     def concatenar(self, lista):
         if self.esta_vacia() and lista.esta_vacia():
             return None
-        lista_copia = lista.copiar()  # Asumimos que tenés un método copiar()
+        lista_copia = lista.copiar()  # Asumimos que tenemos un método copiar()
         if self.esta_vacia():
             self.__cabeza = lista_copia.__cabeza
             self.__cola = lista_copia.__cola
@@ -239,4 +242,4 @@ if __name__=='__main__':
         
                 
                 
-            
+              
