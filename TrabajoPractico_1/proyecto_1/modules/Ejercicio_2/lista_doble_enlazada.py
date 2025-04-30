@@ -1,4 +1,4 @@
-from modules.Nodos import Nodo
+from modules.Ejercicio_2.Nodos import Nodo
 
 class ListaDobleEnlazada:
     def __init__(self):
@@ -141,10 +141,10 @@ class ListaDobleEnlazada:
             actual = actual.anterior
 
         while self.__cabeza is not None:
-            self.extraer()  # suponiendo que esto elimina de la cabeza o cola
+            self.extraer()  
 
         for dato in datos:
-            self.agregar_al_final(dato)  # o al inicio, según el orden que querés
+            self.agregar_al_final(dato)  
         
             
 
@@ -173,7 +173,7 @@ class ListaDobleEnlazada:
     def concatenar(self, lista):
         if self.esta_vacia() and lista.esta_vacia():
             return None
-        lista_copia = lista.copiar()  # Asumimos que tenemos un método copiar()
+        lista_copia = lista.copiar()  
         if self.esta_vacia():
             self.__cabeza = lista_copia.__cabeza
             self.__cola = lista_copia.__cola

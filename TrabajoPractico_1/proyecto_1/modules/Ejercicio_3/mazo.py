@@ -1,5 +1,5 @@
-from modules.lista_doble_enlazada import ListaDobleEnlazada  # Importa la clase ListaDobleEnlazada
-from modules.carta import Carta 
+from modules.Ejercicio_2.lista_doble_enlazada import ListaDobleEnlazada  # Importa la clase ListaDobleEnlazada
+from modules.Ejercicio_3.carta import Carta 
 class DequeEmptyError(Exception):
     pass  # Define una excepción personalizada para cuando el mazo está vacío
 
