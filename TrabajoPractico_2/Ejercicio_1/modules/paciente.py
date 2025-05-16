@@ -19,6 +19,9 @@ class Paciente:
         self.__riesgo = choices(niveles_de_riesgo, probabilidades)[0]
         self.__descripcion = descripciones_de_riesgo[self.__riesgo-1]
         self.__horaLlegada = datetime.datetime.now()
+    @property
+    def hora_llegada(self):
+        hora_llegada=self.__horaLlegada
 
     def get_nombre(self):
         return self.__nombre

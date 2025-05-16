@@ -92,10 +92,12 @@ class monticulo:
         return pacienteAtendido
 
 
-    # Es una clase generalizada? 
-    # Qué restricciones debe tener?
+    # Es una clase generalizada? nao
+    # Qué restricciones debe tener? 
     # Debemos añadir una función que construya un monticulo a partir de una lista?
     
-    
+    def construirMonticulo(self,lista):
+        i=len(lista)//2
+        listaMonticulo=
     
       
