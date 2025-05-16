@@ -18,10 +18,13 @@ class Paciente:
         self.__apellido = apellidos[randint(0, n-1)]
         self.__riesgo = choices(niveles_de_riesgo, probabilidades)[0]
         self.__descripcion = descripciones_de_riesgo[self.__riesgo-1]
-        self.__horaLlegada = datetime.datetime.now()
+        self.__segundoCriterio = datetime.datetime.now()
+        
     @property
-    def hora_llegada(self):
-        hora_llegada=self.__horaLlegada
+    def segundoCriterio(self):
+       return self.__segundoCriterio
+   
+    
 
     def get_nombre(self):
         return self.__nombre
@@ -29,8 +32,17 @@ class Paciente:
     def get_apellido(self):
         return self.__apellido
     
-    def get_riesgo(self):
+    @property
+    def riesgo(self):
         return self.__riesgo
+    @riesgo.setter
+    def riesgo(self,nuevote_riesgote):
+        if type(self.__riesgo) != int:
+            raise TypeError("el riesgo debe ser un numero entero entre 1 y 3")
+        if nuevote_riesgote not in [1,2,3]:
+            raise ValueError("el riesgo debe ser un valor entero entre 1 y 3")
+        self.__riesgo=nuevote_riesgote
+    
     
     def get_descripcion_riesgo(self):
         return self.__descripcion
@@ -40,7 +52,23 @@ class Paciente:
         cad += self.__apellido + '\t -> '
         cad += str(self.__riesgo) + '-' + self.__descripcion
         return cad
+    def __lt__(self,otro):
+        if self.__riesgo < otro.riesgo:
+            return True
+        elif self.__riesgo == otro.riesgo:
+            if self.__segundoCriterio < otro.segundoCriterio:
+                return True
+            else:
+                return False
+        else:
+            return False
         
         
+if __name__ == "__main__":
+    paciente1=Paciente()
+    paciente2=Paciente()
+    if paciente1>paciente2:
+        print(paciente1)
+    print(paciente1,paciente2)
         
         

@@ -1,4 +1,4 @@
-from modules.paciente import paciente as pac
+
 class monticulo:
     def __init__(self):
         self.__listaMonticulo = [0]
@@ -19,7 +19,7 @@ class monticulo:
     #Infiltra elementos hasta que se cumpla el criterio de orden del monticulo
     def infiltrarArriba(self, i):
         while i//2>0:
-            if self.__listaMonticulo[i].riesgo > self.__listaMonticulo[i//2].riesgo:
+            if self.__listaMonticulo[i] < self.__listaMonticulo[i//2]:
                 tmp = self.__listaMonticulo[i//2]
                 self.__listaMonticulo[i//2] = self.__listaMonticulo[i]
                 self.__listaMonticulo[i] = tmp
@@ -27,42 +27,26 @@ class monticulo:
     #Inserta los elementos al final, manteniendo la estructura. Utiliza el método infiltrarArriba para 
     #mantener el orden
     def insertar(self, valor):
-        self.__listaMonticulo.append(pac.valor)
+        self.__listaMonticulo.append(valor)
         self.__tamanoActual+=1
         self.infiltrarArriba(self.tamanoActual)
+    
+    def __len__(self):
+        return self.__tamanoActual
+    
+    def __iter__(self):
+        for i in range(1, self.__tamanoActual + 1):
+            yield self.__listaMonticulo[i]
 
 
     
-    # def hijoMin (self,i):
-
-    #     if i*2 +1 > self.__tamanoActual:
-    #         return i*2
-
-    #     else:
-              
-    #         if self.__listaMonticulo[i*2].riesgo < self.__listaMonticulo[i*2+1].riesgo:
-    #             return i*2
-    #         else:
-                
-    #             if self.__listaMonticulo[i*2].horaLlegada > self.__listaMonticulo[i*2+1].horaLLegada:
-    #                 return i*2+1
-                
-    #             else:
-    #                 return i*2
-
     # #Indica cual es el hijo mínimo de determinado elemento
     def hijoMin(self,i):
         if i * 2 + 1 > self.tamanoActual:
             return i * 2
         else:
-            if self.listaMonticulo[i*2].riesgo < self.listaMonticulo[i*2+1].riesgo:
+            if self.listaMonticulo[i*2] < self.listaMonticulo[i*2+1]:
                 return i * 2 
-            elif self.listaMonticulo[i*2].riesgo == self.listaMonticulo[i*2+1].riesgo :
-                if self.__listaMonticulo[i*2].horaLlegada > self.__listaMonticulo[i*2+1].horaLLegada:
-                     return i*2+1
-                
-                else:
-                    return i*2
             else:
                 return i * 2 + 1
                 
@@ -77,7 +61,7 @@ class monticulo:
                 tmp=self.__listaMonticulo[i]
                 self.__listaMonticulo[i]= self.__listaMonticulo[hm]
                 self.__listaMonticulo[hm] = tmp
-        i=hm
+            i=hm
 
     def eliminar (self):
         #Guarda el valor de la raíz
@@ -92,12 +76,14 @@ class monticulo:
         return pacienteAtendido
 
 
-    # Es una clase generalizada? nao
-    # Qué restricciones debe tener? 
-    # Debemos añadir una función que construya un monticulo a partir de una lista?
+
     
     def construirMonticulo(self,lista):
         i=len(lista)//2
-        listaMonticulo=
-    
+        listaMonticulo= [0] + lista[:]
+        self.tamanoActual=len(lista)
+        while (i>0):
+            self.infiltrarAbajo(i)
+        i-=1
+        
       
