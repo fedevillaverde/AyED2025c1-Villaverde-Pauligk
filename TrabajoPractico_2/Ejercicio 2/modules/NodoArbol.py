@@ -61,3 +61,5 @@ class NodoArbol:
             self.__hijoIzquierdo=self
         if self.tieneHijoDerecho():
             self.__hijoIzquierdo = self
+            
+            
