@@ -24,6 +24,18 @@ class NodoArbol:
     @property
     def factorEquilibrio(self):
         return self.__factorEquilibrio
+    @property
+    def clave(self):
+        return self.__clave
+    @property
+    def cargaUtil(self):
+        return self.__cargaUtil
+    @clave.setter
+    def clave(self,nueva_clave):
+        self.__clave = nueva_clave
+    @cargaUtil.setter
+    def cargaUtil(self,nueva_carga_util):
+        self.__cargaUtil = nueva_carga_util
     @factorEquilibrio.setter
     def factorEquilibrio(self,nuevito_valorcito):
         self.__factorEquilibrio = nuevito_valorcito

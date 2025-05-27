@@ -30,5 +30,5 @@ def medir_tiempos(metodo_ord, tamanos):
 
 if __name__ == '__main__':
     tamanos = [1, 10, 100, 200, 500, 700, 1000]
-    medir_tiempos(tamanos)
+    medir_tiempos(      tamanos)
     
