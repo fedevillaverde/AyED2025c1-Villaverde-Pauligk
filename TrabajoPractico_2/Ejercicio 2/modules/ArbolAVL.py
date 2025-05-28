@@ -9,7 +9,9 @@ class ArbolAVL:
     
     def __len__(self):
         return self.__tamano
-        
+
+
+    #Si está vacío el árbol, lo asigna a la raíz. Sino, llama a "_agregar()" 
     def agregar(self,nuevita_clavecita,nuevito_valorcito=None):
         if self.__raiz:
             self._agregar(nuevita_clavecita,nuevito_valorcito,self.__raiz)
@@ -17,6 +19,7 @@ class ArbolAVL:
             self.__raiz = NodoArbol(nuevita_clavecita,nuevito_valorcito)
             self.__tamano += 1
             self.__raiz.factorEquilibrio = 0
+    #Recorre el árbol hasta colocar el nodo en donde corresponde
     def _agregar(self, nuevita_clavecita,nuevito_valorcito,nodoActual):
         if nuevita_clavecita < nodoActual.clave:
             if nodoActual.tieneHijoIzquierdo():
@@ -49,6 +52,9 @@ class ArbolAVL:
         
     def rotarIzquierda(self, pivote:NodoArbol):
         nuevaRaiz= pivote.hijoDerecho #cambie hijo izquierdo por hijo derecho pq me parece que no tenia sentido si no.
+        if nuevaRaiz is None:
+        # No hay nodo para rotar a la izquierda
+            return
         pivote.hijoDerecho = nuevaRaiz.hijoIzquierdo
         if nuevaRaiz.hijoIzquierdo != None:
             nuevaRaiz.hijoIzquierdo.padre = pivote
@@ -67,6 +73,9 @@ class ArbolAVL:
         
     def rotarDerecha(self, pivote: NodoArbol):
         nuevaRaiz = pivote.hijoIzquierdo
+        if nuevaRaiz is None:
+        # No hay nodo para rotar a la izquierda
+            return
         pivote.hijoIzquierdo = nuevaRaiz.hijoDerecho
         if nuevaRaiz.hijoDerecho != None:
              nuevaRaiz.hijoDerecho.padre = pivote
@@ -126,30 +135,70 @@ class ArbolAVL:
             if nodito:
                 return nodito.cargaUtil
         
-    def _buscar_min(self, nodito:NodoArbol, clave_min, clave_max):  #devuelve el nodo con la menor carga util en ese rango (espero que asi sea)
+    # def _buscar_min(self, nodito:NodoArbol, clave_min, clave_max):  #devuelve el nodo con la menor carga util en ese rango (espero que asi sea)
+    #     if nodito is None:
+    #         return None
+    #     if nodito.clave < clave_min:
+    #         return self._buscar_min(nodito.hijoDerecho,clave_min,clave_max)
+    #     if nodito.clave > clave_max:
+    #         return self._buscar_min(nodito.hijoIzquierdo,clave_min,clave_max)
+    #     posible_menor = self._buscar_min(nodito.hijoIzquierdo,clave_min,clave_max)
+    #     return posible_menor if posible_menor else nodito
+
+    def _buscar_min(self, nodito: NodoArbol, clave_min, clave_max):
         if nodito is None:
             return None
-        if nodito.clave < clave_min:
-            return self._buscar_min(nodito.hijoDerecho,clave_min,clave_max)
-        if nodito.clave > clave_max:
-            return self._buscar_min(nodito.hijoIzquierdo,clave_min,clave_max)
-        posible_menor = self._buscar_min(nodito.hijoIzquierdo,clave_min,clave_max)
-        return posible_menor if posible_menor else nodito
+        #Realiza una búsqueda recursiva por los hijos izq y der
+        menor_izq = self._buscar_min(nodito.hijoIzquierdo, clave_min, clave_max)
+        menor_der = self._buscar_min(nodito.hijoDerecho, clave_min, clave_max)
+
+        menorcito = None
+        #menorcito es el menor valor de los hijos de un nodo. permance constante hasta que se encuentra otro menor
+        if clave_min <= nodito.clave <= clave_max:
+            menorcito = nodito
+
+        if menor_izq and (menorcito is None or menor_izq.cargaUtil < menorcito.cargaUtil):
+            menorcito = menor_izq
+
+        if menor_der and (menorcito is None or menor_der.cargaUtil < menorcito.cargaUtil):
+            menorcito = menor_der
+
+        return menorcito   
+    
             
     def buscar_max(self, clave_min, clave_max): #itera sobre el nodo para buscar
         if self.__raiz:
             nodito = self._buscar_max(self.__raiz, clave_min, clave_max)
             if nodito:
                 return nodito.cargaUtil
-    def _buscar_max(self, nodito:NodoArbol, clave_min, clave_max): # hace lo mismo que el de arriba pero con el maximo (espero)
+    # def _buscar_max(self, nodito:NodoArbol, clave_min, clave_max): # hace lo mismo que el de arriba pero con el maximo (espero)
+    #     if nodito is None:
+    #         return None
+    #     if nodito.clave < clave_min:
+    #         return self._buscar_max(nodito.hijoIzquierdo,clave_min,clave_max)
+    #     if nodito.clave > clave_max:
+    #         return self._buscar_max(nodito.hijoDerecho, clave_min, clave_max)
+    #     posible_mayor = self._buscar_max(nodito.hijoDerecho,clave_min,clave_max)
+    #     return posible_mayor if posible_mayor else nodito
+    def _buscar_max(self, nodito, clave_min, clave_max): #Mismo mecanismo recursivo que _buscar_min
         if nodito is None:
             return None
-        if nodito.clave < clave_min:
-            return self._buscar_max(nodito.hijoIzquierdo,clave_min,clave_max)
-        if nodito.clave > clave_max:
-            return self._buscar_max(nodito.hijoDerecho, clave_min, clave_max)
-        posible_mayor = self._buscar_max(nodito.hijoDerecho,clave_min,clave_max)
-        return posible_mayor if posible_mayor else nodito
+
+        mayor_izq = self._buscar_max(nodito.hijoIzquierdo, clave_min, clave_max)
+        mayor_der = self._buscar_max(nodito.hijoDerecho, clave_min, clave_max)
+
+        mayorcito = None
+        if clave_min <= nodito.clave <= clave_max:
+            mayorcito = nodito
+
+        if mayor_izq and (mayorcito is None or mayor_izq.cargaUtil > mayorcito.cargaUtil):
+            mayorcito = mayor_izq
+
+        if mayor_der and (mayorcito is None or mayor_der.cargaUtil > mayorcito.cargaUtil):
+            mayorcito = mayor_der
+
+        return mayorcito
+
     def eliminar(self,clave): #itera sobre un nodo desde la raiz
         if self.__raiz:
             return self._eliminar(self.__raiz, clave)
