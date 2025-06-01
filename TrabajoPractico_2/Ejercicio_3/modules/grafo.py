@@ -32,7 +32,7 @@ class Grafo:
     def __iter__(self):
         return iter(self.listaVertices.values())
     
-    # def __getitem__(self, clave):
-    #     return self.listaVertices[clave] if clave in self.listaVertices else None
+    def __getitem__(self, clave):
+        return self.listaVertices[clave] if clave in self.listaVertices else None
              
         

@@ -3,6 +3,7 @@ class Vertice:
         self.id = clave
         self.conectadoA = {}
         self.distancia = 0
+        self.siguiente = []
         self.predecesor = None
     
     def agregarVecino(self,vecino,ponderacion=0):
@@ -31,6 +32,12 @@ class Vertice:
         
     def obtenerPredecesor(self):
         return self.predecesor
+    
+    def asignarSiguiente(self,nuevito_hijito):
+        self.siguiente.append(nuevito_hijito)
+        
+    def obtenerSiguiente(self):
+        return self.siguiente
     
 
     

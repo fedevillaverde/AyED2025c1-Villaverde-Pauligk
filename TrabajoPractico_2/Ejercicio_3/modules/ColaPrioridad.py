@@ -20,9 +20,11 @@ class monticulo:
         while i//2>0:
             if self.__listaMonticulo[i][0] < self.__listaMonticulo[i//2][0]:
                 tmp = self.__listaMonticulo[i//2]
-                self.__listaMonticulo[i//2][0] = self.__listaMonticulo[i][0]
+                self.__listaMonticulo[i//2] = self.__listaMonticulo[i]
                 self.__listaMonticulo[i] = tmp
             i = i//2
+
+       
     #Inserta los elementos al final, manteniendo la estructura. Utiliza el método infiltrarArriba para 
     #mantener el orden
     def insertar(self, valor):
@@ -88,6 +90,8 @@ class monticulo:
     def estaVacia(self):
         return self.__tamanoActual == 0
     
+ 
+    
     def decrementarClave(self, vertice, nuevoValor):
         indice = None
         for i in range(1, self.tamanoActual + 1):
@@ -98,8 +102,16 @@ class monticulo:
             raise ValueError("Vértice no encontrado en el montículo")
         if nuevoValor > self.listaMonticulo[indice][0]:
             raise ValueError("Nuevo valor es mayor que el valor actual")
-        self.listaMonticulo[indice][0] = nuevoValor
+       
+        self.listaMonticulo[indice] = (nuevoValor, vertice)
         self.infiltrarArriba(indice)
-            
+
+    def __contains__(self, vertice):
+        for i in range(1, self.tamanoActual + 1):
+            if self.listaMonticulo[i][1] == vertice:
+                return True
+        return False
+        
+        
 if __name__ == '__main__':
     lista_tuplas = [(1)]
