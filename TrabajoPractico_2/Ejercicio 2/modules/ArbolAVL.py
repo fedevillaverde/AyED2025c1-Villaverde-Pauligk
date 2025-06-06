@@ -272,7 +272,13 @@ class ArbolAVL:
                 resultadito.extend(self._buscar_rango(nodito.hijoDerecho, clave1, clave2))
             return resultadito
             
-    
+    def imprimir_en_orden(self): #implementado para hacer la prueba de rotacion del arbol, es para poder ver el arbol.
+        def _inorden(nodo):
+            if nodo is not None:
+                _inorden(nodo.hijoIzquierdo)
+                print(f"Clave: {nodo.clave}, Valor: {nodo.cargaUtil}")
+                _inorden(nodo.hijoDerecho)
+        _inorden(self.__raiz)
     
     
 
