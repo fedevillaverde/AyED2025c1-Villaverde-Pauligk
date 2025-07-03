@@ -38,8 +38,6 @@ class monticulo:
         for i in range(1, self.__tamanoActual + 1):
             yield self.__listaMonticulo[i]
 
-
-    
     # #Indica cual es el hijo mínimo de determinado elemento
     def hijoMin(self,i):
         if i * 2 + 1 > self.tamanoActual:
@@ -50,10 +48,6 @@ class monticulo:
             else:
                 return i * 2 + 1
                 
-
-
-
-
     def infiltrarAbajo (self,i):
         while (2*i) < self.__tamanoActual:
             hm=self.hijoMin(i)
@@ -74,16 +68,17 @@ class monticulo:
         #Usa el método infiltrar abajo para conservar el orden
         self.infiltrarAbajo(1)
         return pacienteAtendido
-
-
-
     
     def construirMonticulo(self,lista):
+        #Toma el último padre
         i=len(lista)//2
-        listaMonticulo= [0] + lista[:]
+        #pasa la misma lista con un cero delante 
+        self.__listaMonticulo= [0] + lista[:]
+        #toma el tamaño de la lista 
         self.tamanoActual=len(lista)
+        #infiltra hacia abajo cada padre hasta la raiz 
         while (i>0):
             self.infiltrarAbajo(i)
-        i-=1
+            i-=1
         
       

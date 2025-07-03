@@ -1,7 +1,8 @@
 import unittest
-from modules.ArbolAVL import ArbolAVL
+from  modules.ArbolAVL import ArbolAVL
 from modules.NodoArbol import NodoArbol
- #Hice el test con GPt c:
+
+
 class TestArbolAVL(unittest.TestCase):
     def setUp(self):
         self.arbol = ArbolAVL()
@@ -31,13 +32,13 @@ class TestArbolAVL(unittest.TestCase):
         self.arbol.eliminar(10)
         self.assertIsNone(self.arbol.buscar(10))
 
-    # def test_buscar_min(self): ##estan comentados porque hubo que cambiar el metodo para que funcione con el valor.
-    #     valor_min = self.arbol.buscar_min(10, 30)
-    #     self.assertEqual(valor_min, 'b')  # 10 -> 'b'
+    def test_buscar_min(self): ##estan comentados porque hubo que cambiar el metodo para que funcione con el valor.
+        valor_min = self.arbol.buscar_min(10, 30)
+        self.assertEqual(valor_min, 'a')  # 10 -> 'a'
 
-    # def test_buscar_max(self): ## lo mismo que el metodo buscar_min
-    #     valor_max = self.arbol.buscar_max(10, 30)
-    #     self.assertEqual(valor_max, 'c')  # 30 -> 'c'
+    def test_buscar_max(self): ## lo mismo que el metodo buscar_min
+        valor_max = self.arbol.buscar_max(10, 30)
+        self.assertEqual(valor_max, 'f')  # 30 -> 'f'
 
     def test_buscar_rango(self):
         nodos = self.arbol.buscar_rango(10, 25)

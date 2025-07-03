@@ -19,8 +19,10 @@ class ArbolAVL:
             self.__raiz = NodoArbol(nuevita_clavecita,nuevito_valorcito)
             self.__tamano += 1
             self.__raiz.factorEquilibrio = 0
+
     #Recorre el árbol hasta colocar el nodo en donde corresponde
     def _agregar(self, nuevita_clavecita,nuevito_valorcito,nodoActual):
+
         if nuevita_clavecita < nodoActual.clave:
             if nodoActual.tieneHijoIzquierdo():
                 self._agregar(nuevita_clavecita,nuevito_valorcito,nodoActual.hijoIzquierdo)
@@ -51,11 +53,14 @@ class ArbolAVL:
             self.actualizarEquilibrio(nodito.padre)
         
     def rotarIzquierda(self, pivote:NodoArbol):
+
         nuevaRaiz= pivote.hijoDerecho #cambie hijo izquierdo por hijo derecho pq me parece que no tenia sentido si no.
         if nuevaRaiz is None:
         # No hay nodo para rotar a la izquierda
             return
+        #EL hijo derecho del pivote es el izq de la nueva raíz
         pivote.hijoDerecho = nuevaRaiz.hijoIzquierdo
+        
         if nuevaRaiz.hijoIzquierdo != None:
             nuevaRaiz.hijoIzquierdo.padre = pivote
         nuevaRaiz.padre = pivote.padre
@@ -68,6 +73,7 @@ class ArbolAVL:
                 pivote.padre.hijoDerecho = nuevaRaiz
         nuevaRaiz.hijoIzquierdo = pivote
         pivote.padre = nuevaRaiz
+        
         pivote.factorEquilibrio = pivote.factorEquilibrio + 1 - min(nuevaRaiz.factorEquilibrio , 0)
         nuevaRaiz.factorEquilibrio = nuevaRaiz.factorEquilibrio + 1 +max(pivote.factorEquilibrio, 0)
         
@@ -89,8 +95,9 @@ class ArbolAVL:
                 pivote.padre.hijoDerecho = nuevaRaiz
         nuevaRaiz.hijoDerecho = pivote
         pivote.padre = nuevaRaiz
-        pivote.factorEquilibrio = pivote.factorEquilibrio + 1 - min(nuevaRaiz.factorEquilibrio , 0)
-        nuevaRaiz.factorEquilibrio = nuevaRaiz.factorEquilibrio + 1 +max(pivote.factorEquilibrio, 0)
+
+        pivote.factorEquilibrio = pivote.factorEquilibrio - 1 + max(nuevaRaiz.factorEquilibrio , 0)
+        nuevaRaiz.factorEquilibrio = nuevaRaiz.factorEquilibrio - 1 - min(pivote.factorEquilibrio, 0)
         
     def reequilibrar (self, nodito: NodoArbol):
         if nodito.factorEquilibrio < 0:
@@ -116,11 +123,13 @@ class ArbolAVL:
     def _buscar(self, clave, nodito:NodoArbol): #busca y retorna el nodo sin eliminarlo
         if nodito is None:
             return None
+        
         if clave < nodito.clave:
             if nodito.tieneHijoIzquierdo():
                 return self._buscar(clave, nodito.hijoIzquierdo)
             else:
                 return None
+            
         elif clave > nodito.clave:
             if nodito.tieneHijoDerecho():
                 return self._buscar(clave, nodito.hijoDerecho)
@@ -128,26 +137,19 @@ class ArbolAVL:
                 return None
         else:
             return nodito
-        
+
+
     def buscar_min(self, clave_min,clave_max): #itera sobre el nodo para buscar
         if self.__raiz:
             nodito = self._buscar_min(self.__raiz, clave_min, clave_max)
             if nodito:
                 return nodito.cargaUtil
         
-    # def _buscar_min(self, nodito:NodoArbol, clave_min, clave_max):  #devuelve el nodo con la menor carga util en ese rango (espero que asi sea)
-    #     if nodito is None:
-    #         return None
-    #     if nodito.clave < clave_min:
-    #         return self._buscar_min(nodito.hijoDerecho,clave_min,clave_max)
-    #     if nodito.clave > clave_max:
-    #         return self._buscar_min(nodito.hijoIzquierdo,clave_min,clave_max)
-    #     posible_menor = self._buscar_min(nodito.hijoIzquierdo,clave_min,clave_max)
-    #     return posible_menor if posible_menor else nodito
-
+        
     def _buscar_min(self, nodito: NodoArbol, clave_min, clave_max):
         if nodito is None:
             return None
+        
         #Realiza una búsqueda recursiva por los hijos izq y der
         menor_izq = self._buscar_min(nodito.hijoIzquierdo, clave_min, clave_max)
         menor_der = self._buscar_min(nodito.hijoDerecho, clave_min, clave_max)
@@ -171,15 +173,8 @@ class ArbolAVL:
             nodito = self._buscar_max(self.__raiz, clave_min, clave_max)
             if nodito:
                 return nodito.cargaUtil
-    # def _buscar_max(self, nodito:NodoArbol, clave_min, clave_max): # hace lo mismo que el de arriba pero con el maximo (espero)
-    #     if nodito is None:
-    #         return None
-    #     if nodito.clave < clave_min:
-    #         return self._buscar_max(nodito.hijoIzquierdo,clave_min,clave_max)
-    #     if nodito.clave > clave_max:
-    #         return self._buscar_max(nodito.hijoDerecho, clave_min, clave_max)
-    #     posible_mayor = self._buscar_max(nodito.hijoDerecho,clave_min,clave_max)
-    #     return posible_mayor if posible_mayor else nodito
+        
+    
     def _buscar_max(self, nodito, clave_min, clave_max): #Mismo mecanismo recursivo que _buscar_min
         if nodito is None:
             return None
@@ -202,6 +197,7 @@ class ArbolAVL:
     def eliminar(self,clave): #itera sobre un nodo desde la raiz
         if self.__raiz:
             return self._eliminar(self.__raiz, clave)
+        
         
     def _minimo(self,nodito:NodoArbol): #encuentra el minimo en un arbol o un sub-arbol
         actual = nodito
@@ -239,7 +235,7 @@ class ArbolAVL:
                 nodito.hijoDerecho = self._eliminar(nodito.hijoDerecho, sucesor.clave)
                 if nodito.hijoDerecho:
                     nodito.hijoDerecho.padre = nodito
-        self.reequilibrar(nodito)
+                self.reequilibrar(nodito)
         return nodito
 
     def extraer(self, clave): #utilizando eliminar, muestra un nodo para despues eliminarlo
@@ -250,6 +246,7 @@ class ArbolAVL:
                 return nodito         
         else:
             return None
+        
     def buscar_rango(self, clave1, clave2): #itera sorbe el arbol desde la raiz para buscar un rango de claves
         if clave1 > clave2:
             raise ValueError("clave 1 debe ser menor o igual a clave 2")
