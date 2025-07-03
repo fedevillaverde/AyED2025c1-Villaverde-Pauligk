@@ -96,8 +96,8 @@ class ArbolAVL:
         nuevaRaiz.hijoDerecho = pivote
         pivote.padre = nuevaRaiz
 
-        pivote.factorEquilibrio = pivote.factorEquilibrio - 1 + max(nuevaRaiz.factorEquilibrio , 0)
-        nuevaRaiz.factorEquilibrio = nuevaRaiz.factorEquilibrio - 1 - min(pivote.factorEquilibrio, 0)
+        pivote.factorEquilibrio = pivote.factorEquilibrio - 1 - max(nuevaRaiz.factorEquilibrio , 0)
+        nuevaRaiz.factorEquilibrio = nuevaRaiz.factorEquilibrio - 1 + min(pivote.factorEquilibrio, 0)
         
     def reequilibrar (self, nodito: NodoArbol):
         if nodito.factorEquilibrio < 0:
